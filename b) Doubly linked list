@@ -1,0 +1,112 @@
+#include<stdio.h>
+#include<stdlib.h>
+ struct node *insertatbeg(struct node *start);
+void displaylist(struct node *start);
+struct node *delete (struct node *start);
+struct node {
+int data;
+struct node *nextleft,*nextright;
+};
+struct node *head=NULL;
+int main(){
+    int choice,a;
+    while(1)
+    {
+        printf("1.Insert an element ::\n");
+        printf("2.Delete an element::\n ");
+        printf("3.Display the elements \n");
+        printf("4.Quit\n");
+        printf("Enter your choice : \n");
+        scanf("%d",&choice);
+
+        switch(choice)
+        {
+        case 1:
+                     head=insertatbeg(head);
+                     break;
+        case 2:
+                     head=delete(head);
+        case 3:
+                      displaylist(head);
+        case 4:
+                      exit(1);
+        default :
+            printf("Wrong choice\n");
+        }
+    }
+}
+ struct node *insertatbeg(struct node *start)
+{
+    int data;
+    printf("Insert an element ::\n");
+    scanf("%d",&data);
+    struct node *temp;
+    struct node *p=start;
+    temp=(struct node *)malloc(sizeof(struct node ));
+    temp->data=data;
+    temp->nextleft=NULL;
+    if(start==NULL)
+    {
+        start=temp;
+       temp->nextright=NULL;
+       return start;
+    }
+    else
+        {
+        while(p->nextright)
+        p=p->nextright;
+        temp->nextleft=p;
+        p->nextright=temp;
+        temp->nextright=NULL;
+        return start;
+    }
+}
+void displaylist(struct node *start)
+{
+    struct node *p=start;
+    while(p)
+    {
+        printf("%d ",p->data);
+        p=p->nextright;
+    }
+}
+struct node *delete(struct node *start)
+{
+    int element,i;
+    struct node *p=start;
+    printf("Enter the element which you have to delete : \n");
+    scanf("%d",&element);
+    if(start==NULL){
+        printf("List is empty\n");
+        return start;
+    }
+    if(start->nextright==NULL)
+        if(start->data==element)
+    {
+     start=NULL;
+    free (p);
+    return start;
+    }
+    if(start->data==element)
+    {
+        start=p->nextright;
+        start->nextleft=NULL;
+        free(p);
+        return   start;
+    }
+    p=start->nextright;
+    while(p->nextright!=NULL){
+            if(p->data==element){
+    p->nextleft->nextright=p->nextright;
+    p->nextright->nextleft=p->nextleft;
+    return start;
+}
+p=p->nextright;
+}
+if(p->data==element)
+{
+    p->nextleft->nextright=NULL;
+    free(p);
+    return start;
+}
+};
