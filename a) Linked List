@@ -1,0 +1,127 @@
+#include<stdio.h>
+struct node{
+int info;
+struct node *link;
+};
+struct node *start=NULL;
+struct node *addatend(struct node *start,int a);
+struct node *addatpos(struct node *start,int a,int b);
+struct node *delete(struct node *start,int a);
+void display(struct node *start);
+int main()
+{
+    int n,a,data,pos,item;
+    struct node *temp;
+    temp=(struct node*)malloc(sizeof(struct node*));
+    printf("Enter the data for the first node : \n");
+    scanf("%d",&data);
+    temp->info=data;
+    temp->link=NULL;
+    start=temp;
+    while(1)
+    {
+        printf("1.Add at end\n");
+        printf("2.Display the linked list\n");
+        printf("3.Add at position\n");
+        printf("4.Delete\n");
+        printf("5.Quit\n");
+        printf("Enter your choice : ");
+        scanf("%d",&n);
+        switch(n)
+        {
+        case 1:
+            printf("Enter the element to be inserted  : \n");
+            scanf("%d",&data);
+            start=addatend(start,data);
+            break;
+        case 2:
+            display(start);
+            break;
+        case 3:
+            printf("Enter the element to be inserted  : \n");
+            scanf("%d",&data);
+            printf("Enter the position at which you want to enter : \n");
+            scanf("%d",&pos);
+            start=addatpos(start,data,pos);
+            break;
+         case 4:
+            printf("Enter the element to be deleted  : \n");
+            scanf("%d",&data);
+            start=delete(start,data);
+            break;
+         case 5:
+            exit(1);
+         default:
+            printf("Wrong choice\n");
+        }
+    }
+}
+struct node *addatend(struct node *start,int a)
+{
+    struct node *p=start;
+    struct node *temp;
+    temp=(struct node*)malloc(sizeof(struct node*));
+    temp->info=a;
+    temp->link=NULL;
+    while(p->link!=NULL)
+        p=p->link;
+    p->link=temp;
+    return start;
+}
+      struct node *delete(struct node *start,int a)
+{
+    struct node *temp;
+    if(start->info==a)
+    {
+        temp=start;
+        start=start->link;
+        free(temp);
+        return start;
+    }
+ else
+ {
+     struct node *p=start;
+     while(p->link!=NULL)
+     {
+         if(p->link->info!=a){
+        temp=p->link;
+        p->link=p->link->link;
+        free(temp);
+        return start;
+     }
+     p=p->link;
+        printf("Entered element is not present.\n");
+        return start;
+ }
+}}
+struct node *addatpos(struct node *start,int a,int b)
+{
+    int i;
+    struct node *temp;
+    struct node *p=start;
+    temp=(struct node*)malloc(sizeof(struct node*));
+    temp->info=a;
+    if(b==1)
+    {
+        temp->link=p;
+        start=temp;
+        return start;
+    }
+    for(i=1;i<b-1&&p!=NULL;i++)
+        p=p->link;
+ temp->link=p->link;
+ p->link=temp;
+ return start;
+}
+void display(struct node *start)
+{
+    static int i=1;
+    struct node *p=start;
+    while(p->link!=NULL)
+    {
+        printf("The data part for %d node is %d\n",i,p->info);
+        p=p->link;
+        i++;
+    }
+    printf("The data part for %d node is %d\n",i,p->info);
+}
